@@ -2,7 +2,6 @@
 /dist
 /node_modules
 
-orm.config.json
 # Logs
 logs
 *.log
@@ -14,6 +13,8 @@ lerna-debug.log*
 
 # OS
 .DS_Store
+.env
+orm.config.json
 
 # Tests
 /coverage
