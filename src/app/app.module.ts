@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-import { Configuration } from 'src/config/config.keys';
-
-import { ConfigModule } from 'src/config/config.module';
-import { ConfigService } from 'src/config/config.service';
-import { DatabaseModule } from 'src/database/database.module';
-import { UserModule } from 'src/modules/user/user.module';
-
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { databaseProviders } from '../database/database.options';
+import { Configuration } from '../config/config.keys';
+import { ConfigModule } from '../config/config.module';
+import { ConfigService } from '../config/config.service';
+import { UserModule } from '../modules/user/user.module';
 @Module({
-  imports: [ConfigModule, DatabaseModule, UserModule],
+  imports: [ConfigModule, TypeOrmModule.forRoot(databaseProviders), UserModule],
   controllers: [],
   providers: [],
 })

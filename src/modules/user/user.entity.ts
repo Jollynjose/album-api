@@ -1,4 +1,14 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  UpdateDateColumn,
+  CreateDateColumn,
+} from 'typeorm';
+import { UserDetail } from './user.detail.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -14,12 +24,28 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   password: string;
 
-  @Column({ type: 'varchar', default: 'ACTIVE', length: 8 })
-  status: string;
+  @OneToOne((type) => UserDetail, {
+    eager: true,
+    cascade: true,
+  })
+  @JoinColumn({ name: 'detail_id' })
+  details: UserDetail;
 
-  @Column({ type: 'timestamp', name: 'created_at' })
-  createAt: Date;
+  @Column({ type: 'boolean', default: true })
+  status: boolean;
 
-  @Column({ type: 'timestamp', name: 'updated_at' })
+  @CreateDateColumn({
+    type: 'timestamp',
+    name: 'create_at',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    name: 'updated_At',
+  })
   updatedAt: Date;
 }
