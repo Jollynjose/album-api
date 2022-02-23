@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Album Api es un playground para probar cosas de nestjs.
 
 ## Installation
 
