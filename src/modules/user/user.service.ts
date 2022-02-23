@@ -12,19 +12,19 @@ export class UserService {
     private readonly _userRepository: UserRepository
   ) {}
 
-  async findAll(): Promise<UserDtoResponse[] | NotFoundException> {
+  async findAll(): Promise<UserDtoResponse[]> {
     const retrievedUsers = await this._userRepository.find({
       where: { status: true },
     });
-    if (!retrievedUsers.length) return new NotFoundException('not found');
+    if (!retrievedUsers.length) throw new NotFoundException('not found');
     const userResponseDto = plainToClass(UserDtoResponse, retrievedUsers);
     return userResponseDto;
   }
-  async findById(id: number): Promise<UserDtoResponse | NotFoundException> {
+  async findById(id: number): Promise<UserDtoResponse> {
     const retrievedUser = await this._userRepository.findOne(id, {
       where: { status: true },
     });
-    if (!retrievedUser) return new NotFoundException('not found');
+    if (!retrievedUser) throw new NotFoundException('not found');
     const userResponseDto = plainToClass(UserDtoResponse, retrievedUser);
     return userResponseDto;
   }
@@ -37,9 +37,9 @@ export class UserService {
   async update(
     id: number,
     user: User
-  ): Promise<UserDtoResponse | NotFoundException> {
+  ): Promise<UserDtoResponse> {
     const foundedUser = await this._userRepository.findOne(id);
-    if (!foundedUser) return new NotFoundException('not found');
+    if (!foundedUser) throw new NotFoundException('not found');
 
     const updatedUser = await this._userRepository.update(id, user);
     const userResponseDto = plainToClass(UserDtoResponse, updatedUser);
@@ -49,7 +49,7 @@ export class UserService {
     const findUser = await this._userRepository.findOne(id, {
       where: { status: true },
     });
-    if (!findUser) return new NotFoundException();
+    if (!findUser) throw new NotFoundException();
     await this._userRepository.update(id, {
       status: false,
     });

@@ -6,9 +6,8 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-import { Song } from '../song/song.entity';
 
-@Entity('Artists')
+@Entity('Bands')
 export class Artist extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;

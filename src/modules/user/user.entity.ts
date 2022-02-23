@@ -7,8 +7,10 @@ import {
   JoinColumn,
   UpdateDateColumn,
   CreateDateColumn,
+  ManyToMany,
 } from 'typeorm';
-import { UserDetail } from './user.detail.entity';
+import { Role } from '../role/role.entity';
+import { UserDetails } from './user.detail.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -24,12 +26,13 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   password: string;
 
-  @OneToOne((type) => UserDetail, {
-    eager: true,
+  @OneToOne((type) => UserDetails, {
     cascade: true,
+    nullable: false,
+    eager: true,
   })
   @JoinColumn({ name: 'detail_id' })
-  details: UserDetail;
+  details: UserDetails;
 
   @Column({ type: 'boolean', default: true })
   status: boolean;
@@ -48,4 +51,7 @@ export class User extends BaseEntity {
     name: 'updated_At',
   })
   updatedAt: Date;
+
+  // @ManyToMany(()=> Role, (Role)=> Role.users)
+  // roles: Role[]
 }

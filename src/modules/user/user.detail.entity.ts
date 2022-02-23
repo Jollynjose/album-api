@@ -1,38 +1,29 @@
 import {
   BaseEntity,
-  Column,
   Entity,
   PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('user_detail')
-export class UserDetail extends BaseEntity {
+@Entity('user_details')
+export class UserDetails extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({ type: 'varchar', unique: true, length: 50, nullable: false })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   name: string;
 
-  @Column({ type: 'varchar', nullable: true, length: 50 })
+  @Column({ type: 'varchar', nullable: true })
   lastname: string;
 
-  @Column({ type: 'boolean', default: true })
-  status: boolean;
+  @Column({ type: 'varchar', default: 'ACTIVE', length: 8 })
+  status: string;
 
-  @CreateDateColumn({
-    type: 'timestamp',
-    name: 'create_at',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at', nullable: true })
   createdAt: Date;
 
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-    name: 'updated_At',
-  })
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at', nullable: true })
   updatedAt: Date;
 }

@@ -5,8 +5,14 @@ import { Configuration } from '../config/config.keys';
 import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/config.service';
 import { UserModule } from '../modules/user/user.module';
+import { RoleModule } from 'src/modules/role/role.module';
 @Module({
-  imports: [ConfigModule, TypeOrmModule.forRoot(databaseProviders), UserModule],
+  imports: [
+    ConfigModule,
+    RoleModule,
+    TypeOrmModule.forRoot(databaseProviders),
+    UserModule,
+  ],
   controllers: [],
   providers: [],
 })

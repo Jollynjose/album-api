@@ -5,10 +5,12 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Artist } from '../artist/artist.entity';
 
-@Entity('songs')
+@Entity('Songs')
 export class Song extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -16,10 +18,21 @@ export class Song extends BaseEntity {
   @Column({ type: 'varchar', length: 25, nullable: false, name: 'url' })
   url: string;
 
-  @Column({ type: 'boolean', default: true })
-  status: boolean;
+  @Column({ type: 'timestamp', name: 'release_date' })
+  releaseDate: Date;
 
-  @ManyToOne(() => Artist, { eager: true, cascade: true })
-  @JoinColumn({ name: 'artist_id' })
-  artist: Artist;
+  @CreateDateColumn({
+    type: 'timestamp',
+    name: 'create_at',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    name: 'updated_At',
+  })
+  updatedAt: Date;
 }

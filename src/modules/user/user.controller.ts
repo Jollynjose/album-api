@@ -9,6 +9,7 @@ import {
   NotFoundException,
   Patch,
 } from '@nestjs/common';
+import { UpdateResult } from 'typeorm';
 import { UserDtoResponse } from './dto/user.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
@@ -17,21 +18,21 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly _userService: UserService) {}
   @Get()
-  async findAll(): Promise<UserDtoResponse[] | NotFoundException> {
+  async findAll(): Promise<UserDtoResponse[]> {
     const foundUsers = await this._userService.findAll();
     return foundUsers;
   }
   @Get('/:id')
   findById(
     @Param('id', new ParseIntPipe()) id: number
-  ): Promise<UserDtoResponse | NotFoundException> {
+  ): Promise<UserDtoResponse> {
     return this._userService.findById(id);
   }
   @Patch('/:id')
   update(
     @Param('id', new ParseIntPipe()) id: number,
     @Body() body: User
-  ): Promise<UserDtoResponse | NotFoundException> {
+  ): Promise<UserDtoResponse> {
     return this._userService.update(id, body);
   }
   @Post()
